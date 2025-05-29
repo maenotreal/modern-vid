@@ -1,25 +1,16 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "modern-vid",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "node ./bin/www"
   },
   "dependencies": {
-    "dotenv": "^16.5.0",
-    "mongoose": "^8.15.1",
-    "next": "15.3.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "run-script": "^0.1.1"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "typescript": "^5"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1"
   }
 }

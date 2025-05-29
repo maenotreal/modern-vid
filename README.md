@@ -1,2 +1,1 @@
-Pet project
-1
+This is piece of shit written on express
