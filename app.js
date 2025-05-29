@@ -1,14 +1,26 @@
+require('dotenv')
+  .config('/.env');
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongoose = require('mongo')
+var mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var sing_upRouter = require('./routes/sign_up');
+var sing_inRouter = require('./routes/sign_in');
 
 var app = express();
+
+mongoose.connect(process.env.MONGODB_URL,  {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/sign_up', sing_upRouter);
+app.use('/sign_in', sing_inRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
