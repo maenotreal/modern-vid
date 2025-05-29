@@ -8,6 +8,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
 
 
 var indexRouter = require('./routes/index');
@@ -31,6 +37,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(limiter);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
