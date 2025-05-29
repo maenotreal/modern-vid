@@ -1,4 +1,4 @@
-const index = require("../index");
+const index = require("../routes/index.js");
 
 const request = require("supertest");
 const express = require("express");
