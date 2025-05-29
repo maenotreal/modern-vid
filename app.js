@@ -7,6 +7,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 const videoRouter = require('./routes/video');
+const { initializeApp } = require('firebase/app');
+const { getStorage } = require('firebase/storage');
+
 
 var app = express();
 
@@ -40,6 +43,10 @@ setInterval(async () => {
 
 const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
+
+module.exports.firebaseApp = firebaseApp;
+module.exports.firebaseStorage = storage;
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

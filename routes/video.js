@@ -4,8 +4,9 @@ const { getStorage, ref, getDownloadURL, getMetadata } = require('firebase/stora
 const mongoose = require('mongoose');
 const fetch = require('node-fetch'); // npm i node-fetch
 const VideoCache = require('../models/VideoCache');
+const { firebaseStorage } = require('../app');
 
-const storage = getStorage(); // Уже инициализирован в app.js
+const storage = firebaseStorage; // Уже инициализирован в app.js
 
 async function getVideoStream(videoId) {
   const cached = await VideoCache.findOne({ videoId });
