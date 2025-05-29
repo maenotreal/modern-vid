@@ -17,6 +17,7 @@ var limiter = RateLimit({
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registrationRouter = require('./routes/registration');
+var loginRouter = require('./routes/login');
 
 
 //mongoDB connection setup
@@ -37,6 +38,7 @@ app.use(limiter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/registration', registrationRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
