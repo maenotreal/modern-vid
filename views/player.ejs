@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Custom Firebase Player</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    video {
+      width: 80%;
+      max-width: 1000px;
+      background: black;
+    }
+  </style>
+</head>
+<body>
+  <video id="player" controls autoplay></video>
+
+  <script>
+    // 🔗 ВСТАВЬ СЮДА свою ссылку от Firebase Storage
+    const firebaseVideoUrl = "<%= videoUrl %>"; // URL вида https://firebasestorage.googleapis.com/...
+
+    const video = document.getElementById('player');
+
+    if ('MediaSource' in window && MediaSource.isTypeSupported('video/mp4; codecs="avc1.64001F, mp4a.40.2"')) {
+      const mediaSource = new MediaSource();
+      video.src = URL.createObjectURL(mediaSource);
+
+      mediaSource.addEventListener('sourceopen', async () => {
+        const sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.64001F, mp4a.40.2"');
+
+        const response = await fetch(firebaseVideoUrl);
+        const reader = response.body.getReader();
+
+        let queue = [];
+
+        const pump = async () => {
+          const { done, value } = await reader.read();
+          if (done) {
+            mediaSource.endOfStream();
+            return;
+          }
+
+          queue.push(value);
+          feedBuffer();
+
+          // Удаляем устаревший буфер (> 1 минуты назад)
+          const safeRemoveTime = Math.max(0, video.currentTime - 60);
+          try {
+            sourceBuffer.remove(0, safeRemoveTime);
+          } catch (e) {
+            // может быть updating или already removed
+          }
+
+          pump();
+        };
+
+        const feedBuffer = () => {
+          if (!sourceBuffer.updating && queue.length > 0) {
+            const chunk = queue.shift();
+            sourceBuffer.appendBuffer(chunk);
+          }
+        };
+
+        sourceBuffer.addEventListener('updateend', feedBuffer);
+
+        pump();
+      });
+    } else {
+      console.warn("MediaSource not supported. Fallback to direct video load.");
+      video.src = firebaseVideoUrl;
+    }
+  </script>
+</body>
+</html>
