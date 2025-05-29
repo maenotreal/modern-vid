@@ -17,7 +17,7 @@ let userSchema = new mongoose.Schema({
     collection : 'userData'
 });
 
-//hashing password
+//hashing password, granting uuid to document and creating JWT for user
 userSchema.pre("save", async function (next) {
     const user = this;
     user.uuid = uuidv7.uuidv7();

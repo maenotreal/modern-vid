@@ -16,13 +16,22 @@ router.get('/', function(req, res, next){
 
 //user registration request
 router.post('/', async function(req, res, next){
+    //creating payload for creating document in db
     const user = new User(req.body);
+
     try {
+        //save user data
         await user.save();
-        logger.info('User '+user.uuid+' has been created');
-        res.status(201).send({user});
+        //sent cookie to user for easy auth
+        res.cookie('token', user.JWT, {
+            maxAge: 604800000,
+            secure: true,
+            httpOnly: true
+        })
+        .redirect('/');
     } catch (e) {
-        res.status(400).send(e);
+        logger.info(error(e));
+        return res.status(400);
     }
 })
 
