@@ -16,6 +16,12 @@
     "mongodb": "^6.16.0",
     "morgan": "~1.9.1",
     "supertest": "^7.1.1",
+    "firebase": "^9.6.10",
+    "mongoose": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.3.0",
     "test": "^3.3.0"
+    
   }
+  
 }
