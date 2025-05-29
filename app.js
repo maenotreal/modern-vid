@@ -1,10 +1,24 @@
+require('dotenv')
+  .config('/.env');
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+var mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var sing_upRouter = require('./routes/sign_up');
+var sing_inRouter = require('./routes/sign_in');
 
 const videoRouter = require('./routes/video');
 
@@ -20,8 +34,7 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID
 };
 
-// Подключение к MongoDB для кеширования
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URL,  {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -50,9 +63,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(limiter);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/sign_up', sing_upRouter);
+app.use('/sign_in', sing_inRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
