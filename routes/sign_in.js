@@ -26,7 +26,7 @@ router.post('/', async function(req, res, next) {
     }
 
     try {
-        let user = await User.findOne({login: req.body.login});
+        let user = await User.findOne({login: {$eq: req.body.login}});
         console.log(user);
         if (!user) {
             return res.status(400).json({

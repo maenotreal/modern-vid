@@ -24,7 +24,7 @@ router.post('/', async function (req,res,next){
 
 
    try {
-       let user = await User.findOne({login: data.login});
+       let user = await User.findOne({login: {$eq: data.login}});
         console.log(user);
        if (user) {
            return res.status(400).json({error: 'user already exist'});
