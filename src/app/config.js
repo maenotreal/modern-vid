@@ -2,14 +2,15 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
+require('dotenv').config()
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDlg8UyiAekeV7TE5Vd1INVhHUqM9jWIdA",
-  authDomain: "modernvid-1d68d.firebaseapp.com",
-  projectId: "modernvid-1d68d",
-  storageBucket: "modernvid-1d68d.firebasestorage.app",
-  messagingSenderId: "206983957438",
-  appId: "1:206983957438:web:bf87033714b98bcf9f07ef"
+  apiKey: process.env.APIKEY,
+  authDomain: process.env.AUTHDOMAIN,
+  projectId: process.env.PROJID,
+  storageBucket: process.env.PROBUC,
+  messagingSenderId: process.env.MESSENID,
+  appId: process.env.APPID
 };
 
 const app = initializeApp(firebaseConfig);

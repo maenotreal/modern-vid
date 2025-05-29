@@ -1,3 +1,5 @@
+import Header from "@/components/Header";
+
 export default function RootLayout({
     children,
 }: {
@@ -6,6 +8,9 @@ export default function RootLayout({
     return (
         <html>
             <body>
+                <Header>
+                    
+                </Header>
                 <main>
                     <nav>
                     </nav>
