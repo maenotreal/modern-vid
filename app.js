@@ -8,6 +8,12 @@ var mongoose = require('mongoose');
 require('dotenv')
     .config('/.env');
 
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var registrationRouter = require('./routes/registration');
@@ -26,6 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(limiter);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
