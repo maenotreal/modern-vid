@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const fetch = require('node-fetch'); // npm i node-fetch
 const VideoCache = require('../models/VideoCache');
 const { firebaseStorage } = require('../app');
+const rateLimit = require('express-rate-limit'); // npm i express-rate-limit
 
 const storage = firebaseStorage; // Уже инициализирован в app.js
 
@@ -44,7 +45,12 @@ const { ref, getDownloadURL } = require('firebase/storage');
 const { firebaseStorage } = require('../app');
 
 // route to show player with metadata
-router.get('/player/:id', async (req, res) => {
+const playerRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // max 100 requests per windowMs
+});
+
+router.get('/player/:id', playerRateLimiter, async (req, res) => {
   try {
     // Find video metadata by ID
     const videoData = await Video.findOne({ videoId: req.params.id });
