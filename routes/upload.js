@@ -19,7 +19,7 @@ const firebaseConfig = {
 };
 
 var firebaseApp = initializeApp(firebaseConfig);
-var firebaseStorage = getStorage(firebaseApp, firebaseConfig.storageBucket);
+var firebaseStorage = getStorage(firebaseApp, 'gs://${firebaseConfig.storageBucket}');
 
 console.log(firebaseStorage);
 
