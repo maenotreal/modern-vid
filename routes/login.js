@@ -40,7 +40,11 @@ router.post('/', async function(req, res, next) {
                 error: 'password is not correct',
         });
     } catch (e) {
-        res.status(500).send(e);
+        res.status(500)
+        .setHeader("Content-Type", "text/plain");
+        log("Exception occurred", e.stack)
+        .end("An exception occured")
+        .redirect('/');
     }
 });
 
