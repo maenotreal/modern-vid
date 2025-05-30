@@ -2,7 +2,6 @@ const express = require('express');
 const multer = require('multer');
 const { getStorage, ref, uploadBytes, getMetadata } = require('firebase/storage');
 const VideoMeta = require('../schemas/VideoMeta');
-const {ref} = require('firebase/storage');
 
 const router = express.Router();
 const storage = multer.memoryStorage();
@@ -20,7 +19,6 @@ const firebaseConfig = {
 };
 
 var firebaseApp = initializeApp(firebaseConfig);
-
 var firebaseStorage = getStorage(firebaseApp, firebaseConfig.storageBucket);
 
 console.log(firebaseStorage);
