@@ -37,5 +37,8 @@ router.post('/', upload.single('video'), async (req, res) => {
     res.status(500).json({ error: 'Failed to upload video' });
   }
 });
-
+ // GET /upload - render the upload form page
+router.get('/', (req, res) => {
+  res.render('uploadPage'); // renders views/upload.ejs
+});
 module.exports = router;
