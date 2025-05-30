@@ -1,7 +1,7 @@
 // utils/deleteUser.js
 
 const User = require('../schemas/userSchema');  // User model
-const Video = require('../schemas/videoSchema'); // Video model
+const Video = require('../schemas/VideoMeta'); // Video model
 const Log = require('../schemas/LogSchema'); // Log model (if applicable)
 
 /**
