@@ -27,8 +27,6 @@ const playerRouter = require('./routes/player');
 const uploadRouter = require('./routes/upload');// ← added
 const searchRouter = require('./routes/search');
 const userProfileRouter = require('./routes/userprofile'); // user profile route
-const uploadRouter = require('./routes/upload');
-const userProfileRouter = require('./routes/userprofile');
 
 
 var usersRouter = require('./routes/users');

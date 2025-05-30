@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middlewares/verifyToken');
 const VideoMeta = require('../schemas/VideoMeta');
-const User = require('../schemas/User');
+// add userschema
 
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {    //не ищет токен
   const user = await User.findById(req.user.id).populate('videos');
   res.render('userprofile', { user });
 });
@@ -31,3 +31,4 @@ router.post('/deleteUser', verifyToken, async (req, res) => {
   res.redirect('/');
 });
 
+module.exports = router;

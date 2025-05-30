@@ -12,7 +12,7 @@ let userSchema = new mongoose.Schema({
     username: {type: String, require: true},
     timestamp: {type: Date, require: true},
     JWT: {type: String, require: true, unique: true},
-    video_ids: {type: Array, require: false},
+    video_ids: {type: Array, require: false}, //rewrite how needed
 }, {
     collection : 'userData'
 });
