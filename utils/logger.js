@@ -2,7 +2,8 @@ const Log = require('../schemas/LogSchema');
 
 async function writeLog(level, message, meta = {}) {
   try {
-    await Log.save({ level, message, meta });
+    const logEntry = new Log({ level, message, meta });
+    await logEntry.save();
   } catch (e) {
     console.error('Logging failed:', e);
   }
