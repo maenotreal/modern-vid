@@ -9,7 +9,8 @@ const videoMetaSchema = new mongoose.Schema({
   size: Number,
   contentType: String,
   firebasePath: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }  // 🟢 связь с юзером
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  views: { type: Number, default: 0 }                          
 }, {
   collection: 'videoMeta'
 });

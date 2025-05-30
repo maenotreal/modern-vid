@@ -15,7 +15,7 @@ function verifyToken(req, res, next) {
       return res.status(403).json({ message: 'Failed to authenticate token' });
     }
 
-    req.user = decoded; // Сохраняем данные пользователя из токена
+    req.user = decoded; // save decoded user info to request object
     next();
   });
 }

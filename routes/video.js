@@ -7,8 +7,11 @@ const VideoCache = require('../models/VideoCache');
 const { firebaseStorage } = require('../app');
 const rateLimit = require('express-rate-limit'); // npm i express-rate-limit
 
-const storage = firebaseStorage; // Уже инициализирован в app.js
+const storage = firebaseStorage; 
 
+const VideoMeta = require('../schemas/VideoMeta'); 
+
+// Helper function to get video stream and cache metadata
 async function getVideoStream(videoId) {
   const cached = await VideoCache.findOne({ videoId });
   const videoRef = ref(storage, `videos/${videoId}`);
@@ -25,12 +28,24 @@ async function getVideoStream(videoId) {
     };
   }
 
-// Рендер player.ejs
-const express = require('express');
-const router = express.Router();
+  const metadata = await getMetadata(videoRef);
+  const videoUrl = await getDownloadURL(videoRef);
+
+  await VideoCache.create({
+    videoId,
+    contentLength: metadata.size,
+    contentType: metadata.contentType
+  });
+
+  return {
+    videoUrl,
+    contentLength: metadata.size,
+    contentType: metadata.contentType
+  };
+}
 
 router.get('/', (req, res) => {
-  const videoId = 'your-video.mp4'; // пример ID (имя файла в Firebase)
+  const videoId = 'your-video.mp4'; 
   res.render('player', {
     videoUrl: `/video/${videoId}`
   });
@@ -85,7 +100,7 @@ module.exports = router;
     contentLength: metadata.size,
     contentType: metadata.contentType
   };
-}
+
 
 router.get('/:videoId', async (req, res) => {
   try {
