@@ -21,6 +21,17 @@
     align-items: baseline;
 }
 
+#error-text{
+    font-family: 'Lato', sans-serif;
+    margin-left: 26em;
+    margin-top: 5em;
+}
+
+#error-text-status{
+    font-family: 'Lato', sans-serif;
+    margin-left: 27.2em;
+}
+
 #reg-log-button {
     font-weight: 700;
     background-color: aquamarine;
