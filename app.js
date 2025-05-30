@@ -4,10 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 
-const {initializeApp} = require('firebase-admin/app');
-const {getStorage} = require('firebase-admin/storage');
-
-
 //dotenv access
 require('dotenv')
     .config('/.env');
@@ -34,18 +30,7 @@ const searchRouter = require('./routes/search');
 var usersRouter = require('./routes/users');
 var registrationRouter = require('./routes/registration');
 var loginRouter = require('./routes/login');
-
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-};
-
-const firebaseApp = initializeApp(firebaseConfig);
-const firebaseStorage = getStorage(firebaseApp);
+const { validateHeaderName } = require('http');
 
 
 //mongoDB connection setup
@@ -87,7 +72,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = {
-  app,
-  firebaseStorage
-};
+module.exports = app;
