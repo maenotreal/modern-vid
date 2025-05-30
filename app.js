@@ -24,6 +24,9 @@ var indexRouter = require('./routes/index');
 // ===================================================================
 const playerRouter = require('./routes/player');
 
+const uploadRouter = require('./routes/upload');// ← added
+const searchRouter = require('./routes/search');
+
 var usersRouter = require('./routes/users');
 var registrationRouter = require('./routes/registration');
 var loginRouter = require('./routes/login');
@@ -49,6 +52,9 @@ app.use('/users', usersRouter);
 app.use('/registration', registrationRouter);
 app.use('/login', loginRouter);
 app.use('/player', playerRouter);
+
+app.use('/upload', uploadRouter);   // ← added
+app.use('/search', searchRouter); 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

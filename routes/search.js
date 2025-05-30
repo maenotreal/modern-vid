@@ -1,0 +1,20 @@
+const express = require('express');
+const VideoMeta = require('../schemas/VideoMeta');
+const router = express.Router();
+
+// GET /search?q=some-tag
+router.get('/', async (req, res) => {
+  const query = req.query.q;
+
+  const videos = await VideoMeta.find({
+    $or: [
+      { title: new RegExp(query, 'i') },
+      { description: new RegExp(query, 'i') },
+      { tags: { $in: [query] } }
+    ]
+  });
+
+  res.render('search-results', { videos });
+});
+
+module.exports = router;
