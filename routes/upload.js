@@ -5,8 +5,8 @@ const { getStorage, ref, uploadBytes, getMetadata } = require('firebase/storage'
 
 const VideoMeta = require('../schemas/VideoMeta');
 const VidData = require('../schemas/vidData'); //!!
-const User = require('../schemas/User');        // !!
-const verifyToken = require('../middleware/verifyToken'); // !!
+// add user schema 
+const verifyToken = require('../middlewares/verifyToken'); // !!
 
 const router = express.Router();
 const storage = multer.memoryStorage();
