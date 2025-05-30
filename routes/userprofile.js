@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middlewares/verifyToken');
 const VideoMeta = require('../schemas/VideoMeta');
+const User = require('../schemas/User'); 
 // add userschema
 
 router.get('/', verifyToken, async (req, res) => {    //не ищет токен

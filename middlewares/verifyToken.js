@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken');
-
 const SECRET_KEY = process.env.SECRET_KEY;
 
 function verifyToken(req, res, next) {
+  // try to get the token from the Authorization header or cookies
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Bearer <token>
+  const tokenFromHeader = authHeader && authHeader.split(' ')[1];
+  const tokenFromCookie = req.cookies && req.cookies.token;
+  const token = tokenFromHeader || tokenFromCookie;
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });
@@ -14,8 +16,7 @@ function verifyToken(req, res, next) {
     if (err) {
       return res.status(403).json({ message: 'Failed to authenticate token' });
     }
-
-    req.user = decoded; // save decoded user info to request object
+    req.user = decoded;
     next();
   });
 }
