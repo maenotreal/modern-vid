@@ -35,7 +35,34 @@ router.get('/', (req, res) => {
   });
 });
 
+// schema import to output video metadata
 
+const Video = require('../schemas/Video');
+
+// firebase instrumentation import to access video files
+const { ref, getDownloadURL } = require('firebase/storage');
+const { firebaseStorage } = require('../app');
+
+// route to show player with metadata
+router.get('/player/:id', async (req, res) => {
+  try {
+    // Find video metadata by ID
+    const videoData = await Video.findOne({ videoId: req.params.id });
+    if (!videoData) return res.status(404).send('Video not found');
+    // Get video URL from Firebase Storage
+    const videoRef = ref(firebaseStorage, `videos/${videoData.videoId}`);
+    const videoUrl = await getDownloadURL(videoRef);
+    // Render EJS template with video metadata
+    res.render('player', {
+      title: videoData.title,
+      description: videoData.description,
+      videoUrl
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
 
 module.exports = router;
   const metadata = await getMetadata(videoRef);
