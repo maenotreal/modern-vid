@@ -47,6 +47,21 @@ router.post('/', upload.single('video'), async (req, res) => {
 
     await newVideo.save();
 
+    const vidData = new VidData({
+  userId: req.user._id, // убедись, что req.user заполняется (например, через сессию)
+  videoMetaId: newVideo._id
+});
+
+newVideo.user = req.user.id;
+await newVideo.save();
+
+// Update user's video list
+const User = require('../schemas/User');
+await User.findByIdAndUpdate(req.user.id, {
+  $push: { videos: newVideo._id }
+});
+
+await vidData.save();
     res.status(201).json({ message: 'Video uploaded and metadata saved' });
   } catch (error) {
     console.error('Upload error:', error);

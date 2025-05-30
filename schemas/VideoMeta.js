@@ -9,6 +9,7 @@ const videoMetaSchema = new mongoose.Schema({
   size: Number,
   contentType: String,
   firebasePath: String
+  
 }, {
   collection: 'videoMeta'
 });

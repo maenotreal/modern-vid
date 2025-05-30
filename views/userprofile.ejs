@@ -1,0 +1,16 @@
+<h2>Welcome, <%= user.email %></h2>
+<h3>Your Videos:</h3>
+<ul>
+  <% user.videos.forEach(video => { %>
+    <li>
+      <%= video.title %>
+      <form method="POST" action="/userprofile/delete/<%= video._id %>">
+        <button type="submit">Delete</button>
+      </form>
+    </li>
+  <% }) %>
+</ul>
+
+<form method="POST" action="/userprofile/deleteUser">
+  <button type="submit">Delete My Account</button>
+</form>
