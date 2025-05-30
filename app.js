@@ -45,7 +45,7 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-const storage = getStorage(firebaseApp);
+const firebaseStorage = getStorage(firebaseApp);
 
 
 //mongoDB connection setup
@@ -86,7 +86,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 module.exports = {
   app,
   firebaseStorage
-}
+};
