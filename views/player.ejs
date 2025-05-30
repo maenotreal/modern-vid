@@ -1,0 +1,21 @@
+<!-- EJS template to show player with video.js -->>
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <!--styles for video.js-->
+  <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+</head>
+<body>
+    <!--Header and video description from MongoDB-->
+  <h1><%= title %></h1>
+  <p><%= description %></p>
+  <!--player video.js-->
+  <video id="my-video" class="video-js" controls preload="auto" width="640" height="360">
+    <source src="<%= videoUrl %>" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+<!--video.js script-->
+  <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+</body>
+</html>

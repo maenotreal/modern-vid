@@ -1,0 +1,10 @@
+<h1>Search Results</h1>
+<ul>
+  <% videos.forEach(video => { %>
+    <li>
+      <h2><%= video.title %></h2>
+      <p><%= video.description %></p>
+      <a href="/player/<%= video.videoId %>">Watch</a>
+    </li>
+  <% }) %>
+</ul>
