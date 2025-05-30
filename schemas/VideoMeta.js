@@ -8,8 +8,8 @@ const videoMetaSchema = new mongoose.Schema({
   uploadedAt: { type: Date, default: Date.now },
   size: Number,
   contentType: String,
-  firebasePath: String
-  
+  firebasePath: String,
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }  // 🟢 связь с юзером
 }, {
   collection: 'videoMeta'
 });
