@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Video = require('../schemas/Video');
+const Video = require('../schemas/VideoMeta');
 const { getStorage, ref, getDownloadURL } = require('firebase/storage');
 const { firebaseStorage } = require('../app'); // firebase initialized in app.js
 const { writeLog } = require('../utils/logger'); // logging utility

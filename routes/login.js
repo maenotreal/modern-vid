@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-//bcrypt for comparing passes
 const bcrypt = require('bcrypt');
 
 //mongodb schema load

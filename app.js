@@ -4,9 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 
-//dotenv access
-require('dotenv')
-    .config('/.env');
+require('dotenv').config();
 
 var RateLimit = require('express-rate-limit');
 var limiter = RateLimit({
@@ -36,7 +34,13 @@ const { validateHeaderName } = require('http');
 
 
 //mongoDB connection setup
-mongoose.connect(process.env.MONGODB_URI);
+
+mongoose.connect(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch((err) => console.error('MongoDB connection error:', err));
 
 var app = express();
 
@@ -60,7 +64,6 @@ app.use('/upload', uploadRouter);   // ← added
 app.use('/search', searchRouter); 
 app.use('/userprofile', userProfileRouter); // user profile route
 
-app.use('/userprofile', userProfileRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
